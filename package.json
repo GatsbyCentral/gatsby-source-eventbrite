@@ -1,13 +1,12 @@
 {
   "name": "gatsby-source-eventbrite",
   "description": "Gatsby source plugin for integration of eventbrite events.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Luis Höfer <luis@superlumen.io> (gatsbycentral.com)",
   "bugs": {
     "url": "https://github.com/gatsbycentral/gatsbycentral.com/issues"
   },
-  "files": "lib",
-  "main": "lib/index.js",
+  "files": ["lib"],
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.52",
     "axios": "^0.18.0",
@@ -47,8 +46,8 @@
   },
   "repository": "https://github.com/GatsbyCentral/gatsby-source-eventbrite.git",
   "scripts": {
-    "build": "babel src --out-dir lib/ --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir lib/ --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }
