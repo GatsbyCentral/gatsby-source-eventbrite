@@ -1,6 +1,5 @@
 /**
  * Handles HTTP Exceptions (axios)
- *
  * @param {any} e
  */
 function httpExceptionHandler(e) {

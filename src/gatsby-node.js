@@ -27,6 +27,12 @@ exports.sourceNodes = async (
   }
 }
 
+/**
+ * Create a node for the provided entity
+ * @param {function} fn - `createNode` function
+ * @param {array} nodes - The result entities from the eventbrite API
+ * @param {string} type - The `type` of the entity
+ */
 const createNodes = function(fn, nodes, type) {
   nodes.forEach(node => {
     const jsonNode = JSON.stringify(node)
