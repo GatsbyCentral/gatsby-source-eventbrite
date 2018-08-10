@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 const _ = require('lodash')
 const fetch = require(`./fetch`)
+const { entities } = require('./entities')
 
 // Add prefix for Eventbrite
 const typePrefix = `Eventbrite`
@@ -12,14 +13,18 @@ exports.sourceNodes = async (
 ) => {
   const { createNode } = actions
 
-  let result = await fetch({
-    accessToken,
-  })
+  // TODO Make entities configurable via gatsby-config and merge with defaults
 
-  const events = result.events
-  createNodes(createNode, events, 'event')
-
-  return
+  // Fetch all defined entities and create nodes
+  // NOTE Need to use `for`. async/await does not work in `forEach` as expected.
+  for (const entity of entities) {
+    const result = await fetch({
+      accessToken,
+      entity: entity,
+    })
+    const entries = result[entity]
+    createNodes(createNode, entries, `${entity}`)
+  }
 }
 
 const createNodes = function(fn, nodes, type) {
