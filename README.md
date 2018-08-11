@@ -10,15 +10,16 @@ WORK IN PROGRESS: At the moment it just fetches `events` from eventbrite.com wit
 
 ## How to use
 
-### Using Delivery API
-
 ```javascript
 // In your gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-eventbrite`,
     options: {
+      organizationId: `The ID of your organization`,
       accessToken: `your_access_token`,
+      // OPTIONAL: Defaults are Events and Venues
+      entities: ['events', 'venues','...']
     },
   },
 ]

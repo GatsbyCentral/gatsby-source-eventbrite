@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 const _ = require('lodash')
 const fetch = require(`./fetch`)
-const { entities } = require('./entities')
+const { defaultEntities } = require('./defaultEntities')
 
 // Add prefix for Eventbrite
 const typePrefix = `Eventbrite`
@@ -9,18 +9,21 @@ const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 exports.sourceNodes = async (
   { actions, getNode, store, cache, createNodeId },
-  { accessToken }
+  options
 ) => {
   const { createNode } = actions
+  const { organizationId, accessToken, entities = [] } = options
 
-  // TODO Make entities configurable via gatsby-config and merge with defaults
+  // Merge default entities with configured ones
+  const entitiesToFetch = [...new Set([...defaultEntities, ...entities])]
 
   // Fetch all defined entities and create nodes
   // NOTE Need to use `for`. async/await does not work in `forEach` as expected.
-  for (const entity of entities) {
+  for (const entity of entitiesToFetch) {
     const result = await fetch({
+      organizationId,
       accessToken,
-      entity: entity,
+      entity,
     })
     const entries = result[entity]
     createNodes(createNode, entries, `${entity}`)
