@@ -2,7 +2,8 @@
 
 Source plugin for pulling events and related data from eventbrite. 
 
-WORK IN PROGRESS: At the moment it just fetches `events` from eventbrite.com without further processing or filtering. 
+WORK IN PROGRESS: At the moment it just fetches `events` and `venues` from eventbrite.com without further processing or filtering. Other Endpoints are configurable but haven't been tested yet.
+Works with Eventbrite's API v3.
 
 ## Install
 
