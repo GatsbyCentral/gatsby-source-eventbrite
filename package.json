@@ -33,7 +33,7 @@
     "cross-env": "^5.1.4",
     "prettier": "^1.14.0"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful#readme",
+  "homepage": "https://github.com/GatsbyCentral/gatsbycentral.com#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
