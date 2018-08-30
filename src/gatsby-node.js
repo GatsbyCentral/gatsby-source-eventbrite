@@ -1,7 +1,6 @@
-const crypto = require('crypto')
-const _ = require('lodash')
 const fetch = require(`./fetch`)
 const { defaultEntities } = require('./defaultEntities')
+const processEntry = require('./processEntry')
 
 // Add prefix for Eventbrite
 const typePrefix = `Eventbrite`
@@ -17,18 +16,25 @@ exports.sourceNodes = async (
   // Merge default entities with configured ones
   const entitiesToFetch = [...new Set([...defaultEntities, ...entities])]
 
-  
   // Fetch all defined entities and create nodes
-  // NOTE Need to use `for`. async/await does not work in `forEach` as expected.
-  for (const entity of entitiesToFetch) {
-    const result = await fetch({
-      organizationId,
-      accessToken,
-      entity,
-    })
-    const entries = result[entity]
-    createNodes(createNode, entries, `${entity}`)
-  }
+  const nodes = {}
+  const processedEntries = entitiesToFetch.map(entity => {
+    return fetch({ organizationId, accessToken, entity })
+      .then(data => data[entity].map(entry => processEntry(entry, entity, createNodeId)))
+      .then(data => (nodes[entity] = data))
+  })
+
+  Promise.all(processedEntries)
+    .then(() => console.log(nodes['events'][0]))
+  // for (const entity of entitiesToFetch) {
+  //   const result = await fetch({
+  //     organizationId,
+  //     accessToken,
+  //     entity,
+  //   })
+  //   const entries = result[entity]
+  //   createNodes(createNode, entries, `${entity}`)
+  // }
 }
 
 /**
