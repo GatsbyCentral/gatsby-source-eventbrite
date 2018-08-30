@@ -32,38 +32,11 @@ exports.sourceNodes = async (
   await Promise.all(processedEntries).then(() => {
     Object.keys(nodes).forEach(entity => {
       if (entity === 'events') {
-        nodes[entity].forEach(node => {
+        nodes[entity].forEach(node => {          
           linkEventWithVenue(nodes, entity)
         })
       }
       nodes[entity].forEach(entry => createNode(entry))
-    })
-  })
-  
-}
-
-/**
- * Create a node for the provided entity
- * @param {function} fn - `createNode` function
- * @param {array} nodes - The result entities from the eventbrite API
- * @param {string} type - The `type` of the entity
- */
-const createNodes = function(fn, nodes, type) {
-  nodes.forEach(node => {
-    const jsonNode = JSON.stringify(node)
-    fn({
-      id: node.id,
-      parent: null,
-      ...node, // pass queried data into node
-      children: [],
-      internal: {
-        type: `${makeTypeName(type)}`,
-        // content: jsonNode,
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(jsonNode)
-          .digest(`hex`),
-      },
     })
   })
 }
