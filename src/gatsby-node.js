@@ -17,6 +17,7 @@ exports.sourceNodes = async (
   // Merge default entities with configured ones
   const entitiesToFetch = [...new Set([...defaultEntities, ...entities])]
 
+  
   // Fetch all defined entities and create nodes
   // NOTE Need to use `for`. async/await does not work in `forEach` as expected.
   for (const entity of entitiesToFetch) {

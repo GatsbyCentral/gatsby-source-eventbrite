@@ -9,16 +9,13 @@ const httpExceptionHandler = require(`./http-exception-handler`)
  */
 async function fetch({ organizationId, accessToken, entity }) {
   console.log(`Fetch Eventbrite data for '${entity}' entity`)
-
-  let result = {}
+  // Fetch events from the user (paginated, 50 per page)
+  // TODO Implement other URI's
   try {
-    let res = await axios({
+    return axios({
       method: `get`,
-      // Fetch events from the user (paginated, 50 per page)
-      // TODO Implement other URI's
       url: `https://www.eventbriteapi.com/v3/organizations/${organizationId}/${entity}?token=${accessToken}`,
-    })
-    result = res.data
+    }).then(res => res.data)
   } catch (e) {
     httpExceptionHandler(e)
   }
