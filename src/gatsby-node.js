@@ -4,10 +4,6 @@ const { defaultEntities } = require('./defaultEntities')
 const { linkEventWithVenue } = require('./createNodeRelations')
 const processEntry = require('./processEntry')
 
-// Add prefix for Eventbrite
-const typePrefix = `Eventbrite`
-const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
-
 exports.sourceNodes = async (
   { actions, getNode, store, cache, createNodeId },
   options
