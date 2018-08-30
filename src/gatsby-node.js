@@ -22,20 +22,29 @@ exports.sourceNodes = async (
 
   //----------- USING ES6 ----------------------
   const processedEntries = entitiesToFetch.map(entity => {
-    return fetch({ organizationId, accessToken, entity })
-      .then(data =>
-        data[entity].map(entry => processEntry(entry, entity, createNodeId))
-      )
-      .then(data => (nodes[entity] = data))
+    return (
+      fetch({ organizationId, accessToken, entity })
+        .then(entries =>
+          entries[entity].map(entry =>
+            processEntry(entry, entity, createNodeId)
+          )
+        )
+        // .then(entries => (nodes[entity] = entries))
+        .then(entries => {
+          entries.forEach(entry => createNode(entry))
+        })
+    )
   })
 
-  Promise.all(processedEntries).then(() => {
-    console.log('---------------------')
-    Object.keys(nodes).forEach(entity => {
-      console.log('ENTITY: ', entity)
-      nodes[entity].forEach(entry => createNode(entry))
-    })}
-  )
+  await Promise.all(processedEntries)
+
+  // Promise.all(processedEntries).then(() => {
+  //   console.log('---------------------')
+  //   Object.keys(nodes).forEach(entity => {
+  //     console.log('ENTITY: ', entity)
+  //     nodes[entity].forEach(entry => createNode(entry))
+  //   })}
+  // )
   //----------- USING ES6 ----------------------
 
   // for (const entity of entitiesToFetch) {
