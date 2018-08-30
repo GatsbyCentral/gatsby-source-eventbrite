@@ -1,6 +1,7 @@
 const fetch = require(`./fetch`)
 const _ = require('lodash')
 const { defaultEntities } = require('./defaultEntities')
+const { linkEventWithVenue } = require('./createNodeRelations')
 const processEntry = require('./processEntry')
 
 // Add prefix for Eventbrite
@@ -20,50 +21,25 @@ exports.sourceNodes = async (
   // Fetch all defined entities and create nodes
   const nodes = {}
 
-  //----------- USING ES6 ----------------------
   const processedEntries = entitiesToFetch.map(entity => {
-    return (
-      fetch({ organizationId, accessToken, entity })
-        .then(entries =>
-          entries[entity].map(entry =>
-            processEntry(entry, entity, createNodeId)
-          )
-        )
-        // .then(entries => (nodes[entity] = entries))
-        .then(entries => {
-          entries.forEach(entry => createNode(entry))
-        })
-    )
+    return fetch({ organizationId, accessToken, entity })
+      .then(entries =>
+        entries[entity].map(entry => processEntry(entry, entity, createNodeId))
+      )
+      .then(entries => (nodes[entity] = entries))
   })
 
-  await Promise.all(processedEntries)
-
-  // Promise.all(processedEntries).then(() => {
-  //   console.log('---------------------')
-  //   Object.keys(nodes).forEach(entity => {
-  //     console.log('ENTITY: ', entity)
-  //     nodes[entity].forEach(entry => createNode(entry))
-  //   })}
-  // )
-  //----------- USING ES6 ----------------------
-
-  // for (const entity of entitiesToFetch) {
-  //   const result = await fetch({
-  //     organizationId,
-  //     accessToken,
-  //     entity,
-  //   })
-
-  //   nodes[entity] = result[entity].map(entry =>
-  //     processEntry(entry, entity, createNodeId)
-  //   )
-  // }
-
-  // for (let entity in nodes) {
-  //   nodes[entity].forEach(node => {
-  //     createNode(node)
-  //   })
-  // }
+  await Promise.all(processedEntries).then(() => {
+    Object.keys(nodes).forEach(entity => {
+      if (entity === 'events') {
+        nodes[entity].forEach(node => {
+          linkEventWithVenue(nodes, entity)
+        })
+      }
+      nodes[entity].forEach(entry => createNode(entry))
+    })
+  })
+  
 }
 
 /**
