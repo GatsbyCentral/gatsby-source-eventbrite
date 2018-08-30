@@ -1,4 +1,5 @@
 const fetch = require(`./fetch`)
+const _ = require('lodash')
 const { defaultEntities } = require('./defaultEntities')
 const processEntry = require('./processEntry')
 
@@ -18,22 +19,41 @@ exports.sourceNodes = async (
 
   // Fetch all defined entities and create nodes
   const nodes = {}
+
+  //----------- USING ES6 ----------------------
   const processedEntries = entitiesToFetch.map(entity => {
     return fetch({ organizationId, accessToken, entity })
-      .then(data => data[entity].map(entry => processEntry(entry, entity, createNodeId)))
+      .then(data =>
+        data[entity].map(entry => processEntry(entry, entity, createNodeId))
+      )
       .then(data => (nodes[entity] = data))
   })
 
-  Promise.all(processedEntries)
-    .then(() => console.log(nodes['events'][0]))
+  Promise.all(processedEntries).then(() => {
+    console.log('---------------------')
+    Object.keys(nodes).forEach(entity => {
+      console.log('ENTITY: ', entity)
+      nodes[entity].forEach(entry => createNode(entry))
+    })}
+  )
+  //----------- USING ES6 ----------------------
+
   // for (const entity of entitiesToFetch) {
   //   const result = await fetch({
   //     organizationId,
   //     accessToken,
   //     entity,
   //   })
-  //   const entries = result[entity]
-  //   createNodes(createNode, entries, `${entity}`)
+
+  //   nodes[entity] = result[entity].map(entry =>
+  //     processEntry(entry, entity, createNodeId)
+  //   )
+  // }
+
+  // for (let entity in nodes) {
+  //   nodes[entity].forEach(node => {
+  //     createNode(node)
+  //   })
   // }
 }
 
