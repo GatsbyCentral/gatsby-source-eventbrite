@@ -2,9 +2,9 @@
 const linkEventWithVenue = (nodes, entity) => {
   const joinVenueToEvent = (eventVenueId, nodes) =>
     nodes.venues.filter(venue => venue.id === eventVenueId)[0]
-    
+
   nodes[entity].forEach(node => {
-    node['venue__NODE'] = joinVenueToEvent(node.venue_id, nodes)
+    node['venue'] = joinVenueToEvent(node.venue_id, nodes)
   })
 }
 
