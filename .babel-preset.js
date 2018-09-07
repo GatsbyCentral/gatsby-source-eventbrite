@@ -47,7 +47,7 @@ function preset(context, options = {}) {
         {
           // we are only polyfilling the node environment
           // so we need to enable the runtime replacements for the browser preset
-          polyfill: !!browser,
+          // polyfill: !!browser,
         },
       ],
     ],
