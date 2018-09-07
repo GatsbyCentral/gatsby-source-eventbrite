@@ -28,7 +28,7 @@ exports.sourceNodes = async (
   await Promise.all(processedEntries).then(() => {
     Object.keys(nodes).forEach(entity => {
       if (entity === 'events') {
-        nodes[entity].forEach(node => {
+        nodes[entity].forEach(() => {
           linkEventWithVenue(nodes, entity)
         })
       }
