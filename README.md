@@ -1,6 +1,8 @@
+
 # gatsby-source-eventbrite
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/GatsbyCentral/gatsby-source-eventbrite.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/GatsbyCentral/gatsby-source-eventbrite.svg?branch=master)](https://travis-ci.org/GatsbyCentral/gatsby-source-eventbrite)
 
 Source plugin for pulling events and related data from eventbrite. 
 
