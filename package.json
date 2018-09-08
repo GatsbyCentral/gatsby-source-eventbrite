@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Luis Höfer <luis@superlumen.io> (gatsbycentral.com)",
   "bugs": {
-    "url": "https://github.com/gatsbycentral/gatsbycentral.com/issues"
+    "url": "https://github.com/GatsbyCentral/gatsby-source-eventbrite/issues"
   },
   "dependencies": {
     "@babel/runtime": "7.0.0",
@@ -34,7 +34,7 @@
     "semantic-release": "^15.9.13",
     "travis-deploy-once": "^5.0.7"
   },
-  "homepage": "https://github.com/GatsbyCentral/gatsbycentral.com#readme",
+  "homepage": "https://github.com/GatsbyCentral/gatsby-source-eventbrite/blob/master/README.md",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
