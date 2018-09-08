@@ -1,5 +1,7 @@
 # gatsby-source-eventbrite
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/GatsbyCentral/gatsby-source-eventbrite.svg)](https://greenkeeper.io/)
+
 Source plugin for pulling events and related data from eventbrite. 
 
 WORK IN PROGRESS: At the moment it just fetches `events` and `venues` from eventbrite.com without further processing or filtering. Other Endpoints are configurable but haven't been tested yet.
