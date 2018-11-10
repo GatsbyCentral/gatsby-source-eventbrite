@@ -30,7 +30,7 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "cross-env": "^5.1.4",
-    "prettier": "^1.14.0",
+    "prettier": "^1.15.2",
     "semantic-release": "^15.9.13",
     "travis-deploy-once": "^5.0.7"
   },
